@@ -1,0 +1,353 @@
+/* ========== ПЕРЕМЕННЫЕ И НАСТРОЙКИ ========== */
+:root {
+  /* Цвета (Light Theme) */
+  --color-white: #ffffff;
+  --color-bg-app: #f4f6f8;       /* Чуть более холодный серый фон */
+  --color-bg-surface: #ffffff;
+  
+  /* Акцентный (Teal/Blue) */
+  --color-primary: #21808d;
+  --color-primary-hover: #1a6873;
+  --color-primary-light: rgba(33, 128, 141, 0.08); /* Фон для активных элементов */
+
+  /* Текст */
+  --color-text-main: #1e293b;    /* Slate 800 */
+  --color-text-muted: #64748b;   /* Slate 500 */
+  
+  /* Границы и тени */
+  --color-border: #e2e8f0;
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  
+  /* Радиусы (делаем больше для современности) */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  
+  /* Шрифты */
+  --font-main: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* ========== БАЗОВЫЕ СТИЛИ ========== */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  background-color: var(--color-bg-app);
+  color: var(--color-text-main);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0.75em;
+  color: var(--color-text-main);
+  letter-spacing: -0.02em;
+}
+
+a { 
+  text-decoration: none; 
+  transition: 0.2s; 
+}
+
+/* ========== LAYOUT ========== */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Изменено: Хедер теперь белый, выглядит легче */
+.app-header {
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  position: sticky; /* Приклеиваем хедер */
+  top: 0;
+  z-index: 100;
+}
+
+.app-header h1 {
+  font-size: 20px;
+  margin: 0;
+  color: var(--color-primary); /* Цвет перешел на текст */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-layout {
+  display: flex;
+  flex: 1;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ========== SIDEBAR (МЕНЮ) ========== */
+
+.sidebar {
+  width: 280px; /* Чуть шире */
+  background: var(--color-bg-surface);
+  /* Убрали border-right, теперь визуально разделение за счет фона контента */
+  padding: 24px 16px;
+  height: calc(100vh - 70px);
+  position: sticky;
+  top: 70px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Отступ между кнопками */
+}
+
+/* Изменено: Стиль кнопок меню стал "капсульным" */
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: var(--radius-md); /* Скругленные кнопки */
+  color: var(--color-text-muted);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none; /* Убрали левую полосу */
+}
+
+.nav-link:hover {
+  background-color: var(--color-bg-app);
+  color: var(--color-text-main);
+  transform: translateX(4px); /* Легкий сдвиг вправо */
+}
+
+.nav-link.active {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* ========== MAIN CONTENT ========== */
+
+.app-main {
+  flex: 1;
+  padding: 32px 40px; /* Больше воздуха по краям */
+}
+
+/* Изменено: Страница теперь выглядит как "лист" на сером фоне */
+.page {
+  /* Если у вас был контейнер .page, убираем у него фон, 
+     чтобы карточки лежали прямо на сером фоне .app-main. 
+     Или оставляем прозрачным. */
+  background: transparent; 
+  box-shadow: none;
+  border: none;
+  padding: 0;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+/* ========== COMPONENTS: CARDS ========== */
+
+/* Изменено: Карточки стали мягче и без рамок */
+.card, .stat-card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  /* Убрали border, добавили тень */
+  border: 1px solid transparent; 
+  box-shadow: var(--shadow-soft);
+  padding: 24px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+
+.card:hover, .stat-card:hover {
+  transform: translateY(-4px); /* Всплытие при наведении */
+  box-shadow: var(--shadow-hover);
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.stat-number {
+  font-size: 36px; /* Крупнее цифры */
+  font-weight: 800;
+  color: var(--color-text-main);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ========== TABLES ========== */
+
+.table-wrapper {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  padding: 8px; /* Небольшой отступ таблицы от края карточки */
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: separate; /* Нужно для border-radius у строк */
+  border-spacing: 0;
+}
+
+.data-table th {
+  text-align: left;
+  padding: 16px 20px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--color-bg-app);
+}
+
+.data-table td {
+  padding: 16px 20px; /* Больше воздуха в ячейках */
+  border-bottom: 1px solid var(--color-bg-app);
+  color: var(--color-text-main);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tr:hover td {
+  background-color: #fafafa; /* Очень легкая подсветка строки */
+}
+
+/* ========== FORMS & BUTTONS ========== */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+input, select, textarea, .form-control {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md); /* Более скругленные поля */
+  background: #fdfdfd;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+input:focus, select:focus {
+  outline: none;
+  background: #fff;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-light);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px; /* Кнопки стали больше */
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+  transition: transform 0.1s, background 0.2s;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(33, 128, 141, 0.25); /* Тень под кнопкой */
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: 0 6px 16px rgba(33, 128, 141, 0.35);
+}
+
+.btn-secondary {
+  background-color: #fff;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-main);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-bg-app);
+  border-color: #cbd5e1;
+}
+
+/* ========== RESPONSIVE (MOBILE) ========== */
+
+@media (max-width: 900px) {
+  .app-layout {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 0;
+    padding: 16px;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    overflow-x: auto; /* Горизонтальный скролл меню на мобилке */
+  }
+  
+  .nav-links {
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .nav-link {
+    white-space: nowrap;
+    margin-right: 8px;
+    padding: 8px 16px;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+  }
+  
+  .nav-link.active {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+
+  .app-main {
+    padding: 20px;
+  }
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
